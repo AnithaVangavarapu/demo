@@ -1,0 +1,70 @@
+{
+  "Data": [
+    {
+      "id": "1",
+      "type": "checkbox",
+      "label": "1. In general, would you say your health is:",
+      "options": [
+        {
+          "label": "1 - Excellent",
+          "value": "1"
+        },
+        {
+          "label": "2 - Very good",
+          "value": "2"
+        },
+        {
+          "label": "3 - Good",
+          "value": "3"
+        },
+        {
+          "label": "4 - Fair",
+          "value": "4"
+        },
+        {
+          "label": "5 - Poor",
+          "value": "5"
+        }
+      ],
+      "validation": {
+        "required": {
+          "value": true,
+          "message": "Field is required"
+        }
+      }
+    },
+    {
+      "id": "1",
+      "type": "radio",
+      "label": "1. In general, would you say your health is:",
+      "options": [
+        {
+          "label": "1 - Excellent",
+          "value": "1"
+        },
+        {
+          "label": "2 - Very good",
+          "value": "2"
+        },
+        {
+          "label": "3 - Good",
+          "value": "3"
+        },
+        {
+          "label": "4 - Fair",
+          "value": "4"
+        },
+        {
+          "label": "5 - Poor",
+          "value": "5"
+        }
+      ],
+      "validation": {
+        "required": {
+          "value": true,
+          "message": "Field is required"
+        }
+      }
+    }
+  ]
+}
