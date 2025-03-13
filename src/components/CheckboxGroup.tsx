@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Checkbox } from ".";
 export type option = {
   label: string;
   value: string;
@@ -11,16 +11,15 @@ interface CheckboxProps {
   initialCheckboxValue: string[];
 }
 
-const Checkbox = ({
+const CheckboxGroup = ({
   label,
   options,
   updateCheckboxValues,
   initialCheckboxValue,
 }: CheckboxProps) => {
-  const [checkboxValue, setCheckboxValue] =
-    useState<string[]>(initialCheckboxValue);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+  const [checkboxValue, setCheckboxValue] = useState<string[]>([]);
+
+  const updateValue = (value: string) => {
     if (checkboxValue.includes(value)) {
       const newCheckboxValue = checkboxValue.filter((Value) => Value !== value);
       setCheckboxValue(newCheckboxValue);
@@ -31,21 +30,17 @@ const Checkbox = ({
       updateCheckboxValues(newCheckboxValue);
     }
   };
-
   return (
     <div>
       <p>{label}</p>
       {options.map((option: option, index: number) => {
         return (
           <div key={index}>
-            <input
-              type="checkbox"
-              name={option.label}
+            <Checkbox
+              label={option.label}
               value={option.value}
-              checked={checkboxValue.includes(option.value)}
-              onChange={handleChange}
+              updateValue={updateValue}
             />
-            {option.label}
           </div>
         );
       }, [])}
@@ -53,4 +48,4 @@ const Checkbox = ({
   );
 };
 
-export default Checkbox;
+export default CheckboxGroup;

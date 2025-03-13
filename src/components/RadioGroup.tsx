@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Radio } from ".";
 export type option = {
   label: string;
   value: string;
@@ -9,16 +10,16 @@ interface RadioProps {
   updateRadioValue: (value: string) => void;
   initialRadioValue: string;
 }
-const Radio = ({
+const RadioGroup = ({
   label,
   options,
   updateRadioValue,
   initialRadioValue,
 }: RadioProps) => {
-  const [radioValue, setRadioValue] = useState<string>(initialRadioValue);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRadioValue(e.target.value);
-    updateRadioValue(e.target.value);
+  const [radioValue, setRadioValue] = useState<string>("");
+  const updateValue = (value: string) => {
+    setRadioValue(value);
+    updateRadioValue(value);
   };
 
   return (
@@ -27,14 +28,12 @@ const Radio = ({
       {options.map((option: option, index: number) => {
         return (
           <div key={index}>
-            <input
-              type="radio"
-              name={option.label}
+            <Radio
+              label={option.label}
               value={option.value}
-              checked={radioValue === option.value}
-              onChange={handleChange}
+              updateValue={updateValue}
+              radioValue={radioValue}
             />
-            {option.label}
           </div>
         );
       }, [])}
@@ -42,4 +41,4 @@ const Radio = ({
   );
 };
 
-export default Radio;
+export default RadioGroup;

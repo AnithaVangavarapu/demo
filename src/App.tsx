@@ -37,8 +37,10 @@ const App: React.FC = () => {
     radiovalue = value;
   };
   const handleSubmit = () => {
-    console.log(checkboxvalues);
-    console.log(radiovalue);
+    if (checkboxvalues.length > 0) console.log(checkboxvalues);
+    else console.log(initialCheckboxValue);
+    if (radiovalue === "") console.log(initialRadioValue);
+    else console.log(radiovalue);
   };
 
   return (
