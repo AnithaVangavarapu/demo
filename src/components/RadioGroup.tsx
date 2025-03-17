@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styles from "../app.module.css";
 import { Radio } from ".";
 export type option = {
   label: string;
@@ -31,7 +32,7 @@ const RadioGroup = ({
 
   return (
     <div>
-      <p>{label}</p>
+      <p className={styles.label}>{label}</p>
       {options.map((option: option, index: number) => {
         return (
           <div key={index}>

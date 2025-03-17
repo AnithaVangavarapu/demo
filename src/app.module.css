@@ -1,0 +1,23 @@
+.app {
+  justify-items: center;
+  padding: 10px;
+}
+.wrapper {
+  width: 1200px;
+  margin: 10px auto;
+  padding: 20px;
+  background-color: rgb(251 247 247);
+}
+.button {
+  padding: 20px;
+}
+.label {
+  color: rgb(32, 25, 25);
+}
+.optionLabel {
+  color: rgb(44, 44, 173);
+}
+.icon {
+  color: white;
+  fill: rgb(44, 44, 173);
+}

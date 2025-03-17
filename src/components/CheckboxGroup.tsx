@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styles from "../app.module.css";
 import { Checkbox } from ".";
 export type option = {
   label: string;
@@ -7,43 +8,40 @@ export type option = {
 interface CheckboxProps {
   label: string;
   options: option[];
-  updateCheckboxValues: (value: string[]) => void;
+  updateCheckboxValue: (value: string[]) => void;
   initialCheckboxValue: string[];
 }
 
 const CheckboxGroup = ({
   label,
-
   options,
-  updateCheckboxValues,
+  updateCheckboxValue,
   initialCheckboxValue,
 }: CheckboxProps) => {
   const [checkboxValue, setCheckboxValue] =
     useState<string[]>(initialCheckboxValue);
-  useEffect(() => {
-    setCheckboxValue(initialCheckboxValue);
-  }, [initialCheckboxValue]);
-  const updateValue = (value: string) => {
-    let newCheckboxValue;
-    if (checkboxValue.includes(value)) {
-      newCheckboxValue = checkboxValue.filter((Value) => Value !== value);
-    } else {
-      newCheckboxValue = [...checkboxValue, value];
-    }
 
-    setCheckboxValue(newCheckboxValue);
-    updateCheckboxValues(newCheckboxValue);
+  const updateValue = (value: string) => {
+    let newCheckboxValue: string[];
+    setCheckboxValue((prevValue) => {
+      if (prevValue.includes(value)) {
+        newCheckboxValue = prevValue.filter((val) => val !== value);
+      } else {
+        newCheckboxValue = [...prevValue, value];
+      }
+      updateCheckboxValue(newCheckboxValue);
+      return newCheckboxValue;
+    });
   };
   useEffect(() => {
     if (checkboxValue.length === 0) {
       setCheckboxValue(initialCheckboxValue);
-      updateCheckboxValues(initialCheckboxValue); // Update parent state with the default value
+      updateCheckboxValue(initialCheckboxValue);
     }
-  }, []);
-
+  }, [checkboxValue, initialCheckboxValue]);
   return (
     <div>
-      <p>{label}</p>
+      <p className={styles.label}>{label}</p>
       {options.map((option: option, index: number) => {
         return (
           <div key={index}>

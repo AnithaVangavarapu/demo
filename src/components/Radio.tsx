@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import styles from "../app.module.css";
 interface RadioProps {
   label: string;
   value: string;
@@ -18,7 +19,7 @@ const Radio = ({ label, value, updateValue, radioValue }: RadioProps) => {
         onChange={handleChange}
         checked={radioValue === value}
       />
-      <label>{label}</label>
+      <label style={{ padding: "10px" }}>{label}</label>
     </div>
   );
 };

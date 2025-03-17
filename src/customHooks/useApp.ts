@@ -22,8 +22,6 @@ export const useApp = () => {
     Record<string, string[]>
   >({});
   const [radioValue, setRadioValue] = useState<Record<string, string>>({});
-  let initialCheckboxValue: string[] = [];
-  let initialRadioValue: string = "";
 
   useEffect(() => {
     axios.get<DataItem[]>("/data.json").then((response) => {
@@ -43,7 +41,7 @@ export const useApp = () => {
     }));
   };
   const handleSubmit = () => {
-    const submitData: { [key: string]: string | string[] } = {};
+    const submitData: { [key: string]: string } = {};
 
     data.forEach((item) => {
       if (item.type === "radio") {
@@ -51,8 +49,8 @@ export const useApp = () => {
       } else {
         submitData[item.id] =
           checkboxValues[item.id] && checkboxValues[item.id].length > 0
-            ? checkboxValues[item.id]
-            : [item.options[0].value];
+            ? checkboxValues[item.id].toString()
+            : [item.options[0].value].toString();
       }
     });
 
@@ -61,12 +59,8 @@ export const useApp = () => {
 
   return {
     data,
-    initialRadioValue,
     updateRadioValue,
-    initialCheckboxValue,
     updateCheckboxValues,
     handleSubmit,
-    checkboxValues,
-    radioValue,
   };
 };
