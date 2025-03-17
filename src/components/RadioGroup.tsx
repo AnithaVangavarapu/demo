@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../app.module.css";
 import { Radio } from ".";
 export type option = {
@@ -6,33 +6,29 @@ export type option = {
   value: string;
 };
 interface RadioProps {
-  label: string;
-
+  label?: string;
   options: option[];
   updateRadioValue: (value: string) => void;
   initialRadioValue: string;
+  error?: string;
 }
 const RadioGroup = ({
   label,
   options,
   updateRadioValue,
   initialRadioValue,
+  error,
 }: RadioProps) => {
   const [radioValue, setRadioValue] = useState<string>(initialRadioValue);
-  useEffect(() => {
-    if (radioValue === "") {
-      setRadioValue(initialRadioValue);
-      updateRadioValue(initialRadioValue);
-    }
-  }, [radioValue, initialRadioValue, updateRadioValue]);
+
   const updateValue = (value: string) => {
     setRadioValue(value);
     updateRadioValue(value);
   };
 
   return (
-    <div>
-      <p className={styles.label}>{label}</p>
+    <div className={styles.wrapper}>
+      {label && <p className={styles.label}>{label}</p>}
       {options.map((option: option, index: number) => {
         return (
           <div key={index}>
@@ -40,11 +36,12 @@ const RadioGroup = ({
               label={option.label}
               value={option.value}
               updateValue={updateValue}
-              radioValue={radioValue}
+              isSelected={radioValue === option.value}
             />
           </div>
         );
       }, [])}
+      {error && <p className={styles.label}>{error}</p>}
     </div>
   );
 };

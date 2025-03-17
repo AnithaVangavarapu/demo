@@ -9,30 +9,20 @@ interface CheckboxProps {
 }
 
 const Checkbox = ({ label, value, updateValue, isChecked }: CheckboxProps) => {
-  const [isCheckedState, setIsCheckedState] = useState<boolean>(isChecked);
-
-  const toggleCheck = () => {
-    setIsCheckedState(() => !isCheckedState);
-    updateValue(value);
-  };
-  useEffect(() => {
-    setIsCheckedState(isChecked);
-  }, [isChecked]);
-  useEffect(() => {
-    console.log(isCheckedState);
-  }, [isCheckedState]);
   return (
     <div className="">
-      {isCheckedState ? (
+      {isChecked ? (
         <CheckSquare size={18} className={styles.icon} />
       ) : (
         <Square size={18} />
       )}
 
       <label
-        className={isCheckedState ? styles.optionLabel : ""}
+        className={isChecked ? styles.optionLabel : ""}
         style={{ padding: "10px" }}
-        onClick={toggleCheck}
+        onClick={() => {
+          updateValue(value);
+        }}
       >
         {label}
       </label>

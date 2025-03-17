@@ -22,6 +22,7 @@ export const useApp = () => {
     Record<string, string[]>
   >({});
   const [radioValue, setRadioValue] = useState<Record<string, string>>({});
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     axios.get<DataItem[]>("/data.json").then((response) => {
@@ -53,8 +54,11 @@ export const useApp = () => {
             : [item.options[0].value].toString();
       }
     });
-
-    console.log(submitData);
+    if (error) {
+      return;
+    } else {
+      console.log(submitData);
+    }
   };
 
   return {
@@ -62,5 +66,6 @@ export const useApp = () => {
     updateRadioValue,
     updateCheckboxValues,
     handleSubmit,
+    error,
   };
 };

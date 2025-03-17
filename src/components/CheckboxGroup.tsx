@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "../app.module.css";
 import { Checkbox } from ".";
 export type option = {
@@ -6,10 +6,11 @@ export type option = {
   value: string;
 };
 interface CheckboxProps {
-  label: string;
+  label?: string;
   options: option[];
   updateCheckboxValue: (value: string[]) => void;
   initialCheckboxValue: string[];
+  error?: string;
 }
 
 const CheckboxGroup = ({
@@ -17,6 +18,7 @@ const CheckboxGroup = ({
   options,
   updateCheckboxValue,
   initialCheckboxValue,
+  error,
 }: CheckboxProps) => {
   const [checkboxValue, setCheckboxValue] =
     useState<string[]>(initialCheckboxValue);
@@ -29,6 +31,7 @@ const CheckboxGroup = ({
       } else {
         newCheckboxValue = [...prevValue, value];
       }
+
       updateCheckboxValue(newCheckboxValue);
       return newCheckboxValue;
     });
@@ -39,21 +42,28 @@ const CheckboxGroup = ({
       updateCheckboxValue(initialCheckboxValue);
     }
   }, [checkboxValue, initialCheckboxValue]);
+  const renderItem = useCallback(
+    (option: option, index: number) => {
+      return (
+        <div key={index}>
+          <Checkbox
+            label={option.label}
+            value={option.value}
+            updateValue={updateValue}
+            isChecked={checkboxValue.includes(option.value)}
+          />
+        </div>
+      );
+    },
+    [checkboxValue, updateValue]
+  );
   return (
-    <div>
-      <p className={styles.label}>{label}</p>
-      {options.map((option: option, index: number) => {
-        return (
-          <div key={index}>
-            <Checkbox
-              label={option.label}
-              value={option.value}
-              updateValue={updateValue}
-              isChecked={checkboxValue.includes(option.value)}
-            />
-          </div>
-        );
-      }, [])}
+    <div className={styles.wrapper}>
+      {label && <p className={styles.label}>{label}</p>}
+      {options.map((option: option, index: number) =>
+        renderItem(option, index)
+      )}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 };

@@ -4,20 +4,18 @@ interface RadioProps {
   label: string;
   value: string;
   updateValue: (value: string) => void;
-  radioValue: string;
+  isSelected: boolean;
 }
-const Radio = ({ label, value, updateValue, radioValue }: RadioProps) => {
-  const handleChange = () => {
-    updateValue(value);
-  };
-
+const Radio = ({ label, value, updateValue, isSelected }: RadioProps) => {
   return (
     <div>
       <input
         type="radio"
         value={value}
-        onChange={handleChange}
-        checked={radioValue === value}
+        onChange={() => {
+          updateValue(value);
+        }}
+        checked={isSelected}
       />
       <label style={{ padding: "10px" }}>{label}</label>
     </div>
