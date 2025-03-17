@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Checkbox } from ".";
 export type option = {
   label: string;
@@ -13,23 +13,34 @@ interface CheckboxProps {
 
 const CheckboxGroup = ({
   label,
+
   options,
   updateCheckboxValues,
   initialCheckboxValue,
 }: CheckboxProps) => {
-  const [checkboxValue, setCheckboxValue] = useState<string[]>([]);
-
+  const [checkboxValue, setCheckboxValue] =
+    useState<string[]>(initialCheckboxValue);
+  useEffect(() => {
+    setCheckboxValue(initialCheckboxValue);
+  }, [initialCheckboxValue]);
   const updateValue = (value: string) => {
+    let newCheckboxValue;
     if (checkboxValue.includes(value)) {
-      const newCheckboxValue = checkboxValue.filter((Value) => Value !== value);
-      setCheckboxValue(newCheckboxValue);
-      updateCheckboxValues(newCheckboxValue);
+      newCheckboxValue = checkboxValue.filter((Value) => Value !== value);
     } else {
-      const newCheckboxValue = [...checkboxValue, value];
-      setCheckboxValue(newCheckboxValue);
-      updateCheckboxValues(newCheckboxValue);
+      newCheckboxValue = [...checkboxValue, value];
     }
+
+    setCheckboxValue(newCheckboxValue);
+    updateCheckboxValues(newCheckboxValue);
   };
+  useEffect(() => {
+    if (checkboxValue.length === 0) {
+      setCheckboxValue(initialCheckboxValue);
+      updateCheckboxValues(initialCheckboxValue); // Update parent state with the default value
+    }
+  }, []);
+
   return (
     <div>
       <p>{label}</p>
@@ -40,6 +51,7 @@ const CheckboxGroup = ({
               label={option.label}
               value={option.value}
               updateValue={updateValue}
+              isChecked={checkboxValue.includes(option.value)}
             />
           </div>
         );

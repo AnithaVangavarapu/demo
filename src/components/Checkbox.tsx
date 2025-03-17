@@ -1,25 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface CheckboxProps {
   label: string;
   value: string;
   updateValue: (value: string) => void;
+  isChecked: boolean;
 }
 
-const Checkbox = ({ label, value, updateValue }: CheckboxProps) => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+const Checkbox = ({ label, value, updateValue, isChecked }: CheckboxProps) => {
+  const [isCheckedState, setIsCheckedState] = useState<boolean>(isChecked);
 
   const toggleCheck = () => {
-    setIsChecked(() => !isChecked);
+    setIsCheckedState(!isCheckedState);
     updateValue(value);
   };
-
+  useEffect(() => {
+    setIsCheckedState(isChecked);
+  }, [isChecked]);
   return (
     <div>
       <input
         type="checkbox"
         value={value}
-        checked={isChecked}
+        checked={isCheckedState}
         onChange={toggleCheck}
       />
       <label>{label}</label>

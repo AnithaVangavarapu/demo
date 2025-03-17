@@ -1,72 +1,44 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import { DataItem, useApp } from "./customHooks/useApp";
 import { Button, RadioGroup, CheckboxGroup } from "./components";
 
-export type option = {
-  label: string;
-  value: string;
-};
-interface DataItem {
-  id: string;
-  type: string;
-  label: string;
-  options: option[];
-  validation: {
-    required: {
-      value: boolean;
-      message: string;
-    };
-  };
-}
-
 const App: React.FC = () => {
-  const [data, setData] = useState<DataItem[]>([]);
-  let initialCheckboxValue: string[] = [];
-  let initialRadioValue: string = "";
-  let checkboxvalues: string[] = [];
-  let radiovalue: string = "";
-  useEffect(() => {
-    axios.get<DataItem[]>("/data.json").then((response) => {
-      setData(response.data);
-    });
-  }, []);
-  const updateCheckboxValues = (value: string[]) => {
-    checkboxvalues = value;
-  };
-  const updateRadioValue = (value: string) => {
-    radiovalue = value;
-  };
-  const handleSubmit = () => {
-    if (checkboxvalues.length > 0) console.log(checkboxvalues);
-    else console.log(initialCheckboxValue);
-    if (radiovalue === "") console.log(initialRadioValue);
-    else console.log(radiovalue);
-  };
-
+  const {
+    data,
+    initialRadioValue,
+    updateRadioValue,
+    initialCheckboxValue,
+    updateCheckboxValues,
+    handleSubmit,
+  } = useApp();
   return (
     <div>
       {data.map((item: DataItem, index: number) => {
         if (item.type === "radio") {
-          initialRadioValue = item.options[0].value;
           return (
             <div key={index}>
               <RadioGroup
                 label={item.label}
                 options={item.options}
-                updateRadioValue={updateRadioValue}
-                initialRadioValue={initialRadioValue}
+                updateRadioValue={(value: string) =>
+                  updateRadioValue(item.id, value)
+                }
+                initialRadioValue={initialRadioValue || item.options[0].value}
               />
             </div>
           );
         } else {
-          initialCheckboxValue = [item.options[0].value];
           return (
             <div key={index}>
               <CheckboxGroup
                 label={item.label}
                 options={item.options}
-                updateCheckboxValues={updateCheckboxValues}
-                initialCheckboxValue={initialCheckboxValue}
+                updateCheckboxValues={(value: string[]) =>
+                  updateCheckboxValues(item.id, value)
+                }
+                initialCheckboxValue={
+                  initialCheckboxValue || [item.options[0].value]
+                }
               />
             </div>
           );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Radio } from ".";
 export type option = {
   label: string;
@@ -6,6 +6,7 @@ export type option = {
 };
 interface RadioProps {
   label: string;
+
   options: option[];
   updateRadioValue: (value: string) => void;
   initialRadioValue: string;
@@ -16,7 +17,13 @@ const RadioGroup = ({
   updateRadioValue,
   initialRadioValue,
 }: RadioProps) => {
-  const [radioValue, setRadioValue] = useState<string>("");
+  const [radioValue, setRadioValue] = useState<string>(initialRadioValue);
+  useEffect(() => {
+    if (radioValue === "") {
+      setRadioValue(initialRadioValue);
+      updateRadioValue(initialRadioValue);
+    }
+  }, [radioValue, initialRadioValue, updateRadioValue]);
   const updateValue = (value: string) => {
     setRadioValue(value);
     updateRadioValue(value);
