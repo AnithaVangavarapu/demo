@@ -2,6 +2,10 @@ import React, { useCallback } from "react";
 import { DataItem, useApp } from "./customHooks/useApp";
 import { Button, RadioGroup, CheckboxGroup } from "./components";
 import styles from "./app.module.css";
+import { CSSProperties } from "react";
+const style: CSSProperties = {
+  backgroundColor: "white",
+};
 const App: React.FC = () => {
   const { data, updateRadioValue, updateCheckboxValues, handleSubmit, error } =
     useApp();
@@ -31,6 +35,7 @@ const App: React.FC = () => {
             }
             initialCheckboxValue={[item.options[0].value]}
             error={error}
+            style={style}
           />
         </div>
       );

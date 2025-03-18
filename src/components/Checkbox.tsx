@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CheckSquare, Square } from "lucide-react";
 import styles from "../app.module.css";
+import { CSSProperties } from "react";
 interface CheckboxProps {
   label: string;
   value: string;
   updateValue: (value: string) => void;
   isChecked: boolean;
+  // iconstyle?: React.CSSProperties;
+  shareStyles?: {
+    checkIcon: CSSProperties;
+    label: CSSProperties;
+  };
 }
 
-const Checkbox = ({ label, value, updateValue, isChecked }: CheckboxProps) => {
+const Checkbox = ({
+  label,
+  value,
+  updateValue,
+  isChecked,
+  shareStyles,
+}: // iconstyle,
+CheckboxProps) => {
   return (
-    <div className="">
+    <div>
       {isChecked ? (
-        <CheckSquare size={18} className={styles.icon} />
+        <CheckSquare
+          size={18}
+          className={styles.icon}
+          style={shareStyles?.checkIcon}
+        />
       ) : (
         <Square size={18} />
       )}
 
       <label
         className={isChecked ? styles.optionLabel : ""}
-        style={{ padding: "10px" }}
+        style={shareStyles?.label}
         onClick={() => {
           updateValue(value);
         }}

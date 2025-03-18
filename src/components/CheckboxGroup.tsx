@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, CSSProperties } from "react";
 import styles from "../app.module.css";
 import { Checkbox } from ".";
 export type option = {
@@ -11,7 +11,18 @@ interface CheckboxProps {
   updateCheckboxValue: (value: string[]) => void;
   initialCheckboxValue: string[];
   error?: string;
+  style?: CSSProperties;
 }
+const shareStyles = {
+  checkIcon: {
+    fill: "red",
+    color: "black",
+  },
+  label: {
+    color: "red",
+    padding: "10px",
+  },
+};
 
 const CheckboxGroup = ({
   label,
@@ -19,6 +30,7 @@ const CheckboxGroup = ({
   updateCheckboxValue,
   initialCheckboxValue,
   error,
+  style,
 }: CheckboxProps) => {
   const [checkboxValue, setCheckboxValue] =
     useState<string[]>(initialCheckboxValue);
@@ -51,6 +63,7 @@ const CheckboxGroup = ({
             value={option.value}
             updateValue={updateValue}
             isChecked={checkboxValue.includes(option.value)}
+            shareStyles={shareStyles}
           />
         </div>
       );
@@ -58,7 +71,7 @@ const CheckboxGroup = ({
     [checkboxValue, updateValue]
   );
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={style}>
       {label && <p className={styles.label}>{label}</p>}
       {options.map((option: option, index: number) =>
         renderItem(option, index)
