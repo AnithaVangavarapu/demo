@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback, CSSProperties } from "react";
-import styles from "../app.module.css";
+// import styles from ".../app.module.css";
 import { Checkbox } from ".";
 export type option = {
   label: string;
   value: string;
+};
+export type customStylesProps = {
+  [key: string]: CSSProperties;
 };
 interface CheckboxProps {
   label?: string;
@@ -11,9 +14,12 @@ interface CheckboxProps {
   updateCheckboxValue: (value: string[]) => void;
   initialCheckboxValue: string[];
   error?: string;
-  style?: CSSProperties;
+
+  keyIndex: number;
+  customCheckboxGroup?: customStylesProps;
 }
-const shareStyles = {
+
+const customStyles: customStylesProps = {
   checkIcon: {
     fill: "red",
     color: "black",
@@ -26,11 +32,12 @@ const shareStyles = {
 
 const CheckboxGroup = ({
   label,
+  keyIndex,
   options,
   updateCheckboxValue,
   initialCheckboxValue,
   error,
-  style,
+  customCheckboxGroup,
 }: CheckboxProps) => {
   const [checkboxValue, setCheckboxValue] =
     useState<string[]>(initialCheckboxValue);
@@ -57,22 +64,21 @@ const CheckboxGroup = ({
   const renderItem = useCallback(
     (option: option, index: number) => {
       return (
-        <div key={index}>
-          <Checkbox
-            label={option.label}
-            value={option.value}
-            updateValue={updateValue}
-            isChecked={checkboxValue.includes(option.value)}
-            shareStyles={shareStyles}
-          />
-        </div>
+        <Checkbox
+          label={option.label}
+          value={option.value}
+          updateValue={updateValue}
+          isChecked={checkboxValue.includes(option.value)}
+          customStyles={customStyles}
+          uniqueKey={index}
+        />
       );
     },
     [checkboxValue, updateValue]
   );
   return (
-    <div className={styles.wrapper} style={style}>
-      {label && <p className={styles.label}>{label}</p>}
+    <div key={keyIndex} style={customCheckboxGroup?.container}>
+      {label && <p style={customCheckboxGroup?.label}>{label}</p>}
       {options.map((option: option, index: number) =>
         renderItem(option, index)
       )}

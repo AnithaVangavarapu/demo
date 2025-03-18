@@ -1,0 +1,9 @@
+.label {
+  padding-left: 10px;
+}
+.selectedLabel {
+  color: blue;
+}
+.notSelectedLabel {
+  color: black;
+}

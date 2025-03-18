@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 export type option = {
   label: string;
@@ -16,31 +16,47 @@ export interface DataItem {
     };
   };
 }
+type radioProps = {
+  [key: string]: string;
+};
+type checkboxProps = {
+  [key: string]: string[];
+};
+
 export const useApp = () => {
   const [data, setData] = useState<DataItem[]>([]);
-  const [checkboxValues, setCheckboxValues] = useState<
-    Record<string, string[]>
-  >({});
-  const [radioValue, setRadioValue] = useState<Record<string, string>>({});
+  const [checkboxValues, setCheckboxValues] = useState<checkboxProps>({});
+  const [radioValue, setRadioValue] = useState<radioProps>({});
   const [error, setError] = useState<string>("");
-
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   useEffect(() => {
     axios.get<DataItem[]>("/data.json").then((response) => {
       setData(response.data);
     });
   }, []);
-  const updateCheckboxValues = (id: string, value: string[]) => {
+  const updateCheckboxValues = useCallback((id: string, value: string[]) => {
     setCheckboxValues((prevState) => ({
       ...prevState,
       [id]: value,
     }));
-  };
-  const updateRadioValue = (id: string, value: string) => {
+  }, []);
+  const updateRadioValue = useCallback((id: string, value: string) => {
     setRadioValue((prevState) => ({
       ...prevState,
       [id]: value,
     }));
-  };
+  }, []);
+  const updateDate = useCallback((date: Date | null, type: string) => {
+    if (type === "start") {
+      console.log("startDate:", date);
+      setStartDate(date);
+    } else {
+      console.log("endDate:", date);
+      setEndDate(date);
+    }
+  }, []);
+
   const handleSubmit = () => {
     const submitData: { [key: string]: string } = {};
 
@@ -67,5 +83,8 @@ export const useApp = () => {
     updateCheckboxValues,
     handleSubmit,
     error,
+    startDate,
+    updateDate,
+    endDate,
   };
 };

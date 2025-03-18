@@ -1,0 +1,13 @@
+.label {
+  padding-left: 10px;
+}
+.checklabel {
+  color: rgb(44, 44, 173);
+}
+.unchecklabel {
+  color: black;
+}
+.icon {
+  color: white;
+  fill: rgb(44, 44, 173);
+}
