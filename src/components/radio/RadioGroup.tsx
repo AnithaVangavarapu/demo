@@ -6,18 +6,19 @@ export type option = {
   label: string;
   value: string;
 };
+export type customStylesProps = {
+  [key: string]: CSSProperties;
+};
 interface RadioProps {
   label?: string;
   options: option[];
   updateRadioValue: (value: string) => void;
   initialRadioValue: string;
   error?: string;
-  style?: CSSProperties;
+  customRadio?: customStylesProps;
   key: number;
 }
-export type customStylesProps = {
-  [key: string]: CSSProperties;
-};
+
 const customStyles: customStylesProps = {
   label: {
     color: "red",
@@ -29,7 +30,7 @@ const RadioGroup = ({
   updateRadioValue,
   initialRadioValue,
   error,
-  style,
+  customRadio,
   key,
 }: RadioProps) => {
   const [radioValue, setRadioValue] = useState<string>(initialRadioValue);
@@ -55,8 +56,8 @@ const RadioGroup = ({
     [radioValue]
   );
   return (
-    <div style={style} key={key}>
-      {label && <p>{label}</p>}
+    <div key={key}>
+      {label && <p style={customRadio?.label}>{label}</p>}
       {options.map((option: option, index: number) =>
         renderItem(option, index)
       )}

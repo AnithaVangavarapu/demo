@@ -5,12 +5,16 @@ import { CheckboxGroup } from "./components/checkbox";
 import { RadioGroup } from "./components/radio";
 import styles from "./app.module.css";
 import { CSSProperties } from "react";
+
 export type customStylesProps = {
   [key: string]: CSSProperties;
 };
 const customCheckboxGroup: customStylesProps = {
-  container: { width: "50%" },
+  container: { textAlign: "left" },
   label: { color: "blue", fontSize: "16px" },
+};
+const customRadio: customStylesProps = {
+  label: { color: "green", fontSize: "18PX" },
 };
 const App: React.FC = () => {
   const {
@@ -32,6 +36,7 @@ const App: React.FC = () => {
           updateRadioValue={(value: string) => updateRadioValue(item.id, value)}
           initialRadioValue={item.options[0].value}
           error={error}
+          customRadio={customRadio}
           key={index}
         />
       );
@@ -59,13 +64,15 @@ const App: React.FC = () => {
         label="Start Date"
         type="start"
         updateDate={updateDate}
-        date={startDate}
+        date={startDate ? startDate.toDate() : null}
+        format="dd/MMM/YYYY"
+        maxDate={endDate !== null ? endDate : undefined}
       />
       <DatePickerComp
         label="End Date"
         type="end"
         updateDate={updateDate}
-        date={endDate}
+        date={endDate ? endDate.toDate() : null}
         minDate={startDate !== null ? startDate : undefined}
       />
       <Button label="submit" onClick={handleSubmit} />

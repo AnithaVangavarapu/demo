@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, CSSProperties } from "react";
-// import styles from ".../app.module.css";
+
 import { Checkbox } from ".";
 export type option = {
   label: string;

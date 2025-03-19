@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import dayjs, { Dayjs } from "dayjs";
 import axios from "axios";
 export type option = {
   label: string;
@@ -28,8 +29,11 @@ export const useApp = () => {
   const [checkboxValues, setCheckboxValues] = useState<checkboxProps>({});
   const [radioValue, setRadioValue] = useState<radioProps>({});
   const [error, setError] = useState<string>("");
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  // const [startDate, setStartDate] = useState<Date | null>();
+  // const [endDate, setEndDate] = useState<Date | null>();
+
+  const [startDate, setStartDate] = useState<Dayjs>();
+  const [endDate, setEndDate] = useState<Dayjs>();
   useEffect(() => {
     axios.get<DataItem[]>("/data.json").then((response) => {
       setData(response.data);
@@ -47,9 +51,10 @@ export const useApp = () => {
       [id]: value,
     }));
   }, []);
-  const updateDate = useCallback((date: Date | null, type: string) => {
+  const updateDate = useCallback((date: Dayjs, type: string) => {
     if (type === "start") {
-      console.log("startDate:", date);
+      console.log("startDate:", dayjs(date).format("DD/MMM/YYYY"));
+      console.log("StartDate", date);
       setStartDate(date);
     } else {
       console.log("endDate:", date);
