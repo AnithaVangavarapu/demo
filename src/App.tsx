@@ -1,26 +1,27 @@
 import React, { useCallback } from "react";
 import { DataItem, useApp } from "./customHooks/useApp";
 import { Button, DatePickerComp } from "./components";
-import { CheckboxGroup } from "./components/checkbox";
-import { RadioGroup } from "./components/radio";
+import { CheckboxGroup } from "./components/Checkbox";
+import { RadioGroup } from "./components/Radio";
 import styles from "./app.module.css";
 import { CSSProperties } from "react";
 
-export type customStylesProps = {
-  [key: string]: CSSProperties;
+export type CustomAppStylesProps = {
+  container: CSSProperties;
+  label: CSSProperties;
 };
-const customCheckboxGroup: customStylesProps = {
+const customCheckboxGroup: CustomAppStylesProps = {
   container: { textAlign: "left" },
   label: { color: "blue", fontSize: "16px" },
 };
-const customRadio: customStylesProps = {
+const customRadio: CustomAppStylesProps = {
+  container: { textAlign: "left" },
   label: { color: "green", fontSize: "18PX" },
 };
 const App: React.FC = () => {
   const {
     data,
-    updateRadioValue,
-    updateCheckboxValues,
+    updateDataset,
     handleSubmit,
     error,
     startDate,
@@ -33,32 +34,34 @@ const App: React.FC = () => {
         <RadioGroup
           label={item.label}
           options={item.options}
-          updateRadioValue={(value: string) => updateRadioValue(item.id, value)}
+          updateRadioValue={(value: string) => updateDataset(item.id, value)}
           initialRadioValue={item.options[0].value}
           error={error}
           customRadio={customRadio}
           key={index}
         />
       );
-    } else {
+    } else if (item.type === "checkbox") {
       return (
         <CheckboxGroup
           label={item.label}
           options={item.options}
           updateCheckboxValue={(value: string[]) =>
-            updateCheckboxValues(item.id, value)
+            updateDataset(item.id, value)
           }
           initialCheckboxValue={[item.options[0].value]}
           error={error}
           customCheckboxGroup={customCheckboxGroup}
-          keyIndex={index}
+          key={index}
         />
       );
+    } else {
+      return null;
     }
   }, []);
 
   return (
-    <div className={styles.app}>
+    <div className="container mx-auto mt-10">
       {data.map((item: DataItem, index: number) => renderItem(item, index))}
       <DatePickerComp
         label="Start Date"

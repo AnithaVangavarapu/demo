@@ -1,25 +1,24 @@
 import React, { useState, useEffect, useCallback, CSSProperties } from "react";
-
-import { Checkbox } from ".";
-export type option = {
+import { CustomAppStylesProps } from "../../App";
+import { CheckboxInput } from ".";
+export type Option = {
   label: string;
   value: string;
 };
-export type customStylesProps = {
-  [key: string]: CSSProperties;
+export type CustomStylesProps = {
+  checkIcon: CSSProperties;
+  label: CSSProperties;
 };
 interface CheckboxProps {
   label?: string;
-  options: option[];
+  options: Option[];
   updateCheckboxValue: (value: string[]) => void;
   initialCheckboxValue: string[];
   error?: string;
-
-  keyIndex: number;
-  customCheckboxGroup?: customStylesProps;
+  customCheckboxGroup?: CustomAppStylesProps;
 }
 
-const customStyles: customStylesProps = {
+const customStyles: CustomStylesProps = {
   checkIcon: {
     fill: "red",
     color: "black",
@@ -32,7 +31,6 @@ const customStyles: customStylesProps = {
 
 const CheckboxGroup = ({
   label,
-  keyIndex,
   options,
   updateCheckboxValue,
   initialCheckboxValue,
@@ -62,24 +60,24 @@ const CheckboxGroup = ({
     }
   }, [checkboxValue, initialCheckboxValue]);
   const renderItem = useCallback(
-    (option: option, index: number) => {
+    (option: Option, index: number) => {
       return (
-        <Checkbox
+        <CheckboxInput
           label={option.label}
           value={option.value}
           updateValue={updateValue}
           isChecked={checkboxValue.includes(option.value)}
           customStyles={customStyles}
-          uniqueKey={index}
+          key={index}
         />
       );
     },
     [checkboxValue, updateValue]
   );
   return (
-    <div key={keyIndex} style={customCheckboxGroup?.container}>
+    <div style={customCheckboxGroup?.container}>
       {label && <p style={customCheckboxGroup?.label}>{label}</p>}
-      {options.map((option: option, index: number) =>
+      {options.map((option: Option, index: number) =>
         renderItem(option, index)
       )}
       {error && <p style={{ color: "red" }}>{error}</p>}

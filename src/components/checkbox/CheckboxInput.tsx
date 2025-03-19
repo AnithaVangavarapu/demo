@@ -1,26 +1,24 @@
 import React from "react";
 import { CheckSquare, Square } from "lucide-react";
 import styles from "./checkbox.module.css";
-import { customStylesProps } from "./CheckboxGroup";
+import { CustomStylesProps } from "./CheckboxGroup";
 interface CheckboxProps {
   label: string;
   value: string;
   updateValue: (value: string) => void;
   isChecked: boolean;
-  customStyles?: customStylesProps;
-  uniqueKey: number;
+  customStyles?: CustomStylesProps;
 }
 
-const Checkbox = ({
+const CheckboxInput = ({
   label,
   value,
   updateValue,
   isChecked,
   customStyles,
-  uniqueKey,
 }: CheckboxProps) => {
   return (
-    <div key={uniqueKey}>
+    <div className="flex flex-row items-center ">
       {isChecked ? (
         <CheckSquare
           size={18}
@@ -46,4 +44,4 @@ const Checkbox = ({
   );
 };
 
-export default Checkbox;
+export default CheckboxInput;

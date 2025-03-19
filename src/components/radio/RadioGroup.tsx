@@ -1,28 +1,25 @@
 import React, { useState, useCallback } from "react";
+import { CustomAppStylesProps } from "../../App";
+import { RadioInput } from ".";
 
-import { Radio } from ".";
-import { CSSProperties } from "react";
-export type option = {
+export type Option = {
   label: string;
   value: string;
 };
-export type customStylesProps = {
-  [key: string]: CSSProperties;
+export type CustomStylesProps = {
+  label: string;
 };
 interface RadioProps {
   label?: string;
-  options: option[];
+  options: Option[];
   updateRadioValue: (value: string) => void;
   initialRadioValue: string;
   error?: string;
-  customRadio?: customStylesProps;
-  key: number;
+  customRadio?: CustomAppStylesProps;
 }
 
-const customStyles: customStylesProps = {
-  label: {
-    color: "red",
-  },
+const customStyles: CustomStylesProps = {
+  label: "text-blue-200",
 };
 const RadioGroup = ({
   label,
@@ -31,7 +28,6 @@ const RadioGroup = ({
   initialRadioValue,
   error,
   customRadio,
-  key,
 }: RadioProps) => {
   const [radioValue, setRadioValue] = useState<string>(initialRadioValue);
 
@@ -41,24 +37,24 @@ const RadioGroup = ({
   }, []);
 
   const renderItem = useCallback(
-    (option: option, index: number) => {
+    (option: Option, index: number) => {
       return (
-        <Radio
+        <RadioInput
           label={option.label}
           value={option.value}
           updateValue={updateValue}
           isSelected={radioValue === option.value}
-          key={index}
           customStyles={customStyles}
+          key={index}
         />
       );
     },
     [radioValue]
   );
   return (
-    <div key={key}>
+    <div>
       {label && <p style={customRadio?.label}>{label}</p>}
-      {options.map((option: option, index: number) =>
+      {options.map((option: Option, index: number) =>
         renderItem(option, index)
       )}
       {error && <p>{error}</p>}

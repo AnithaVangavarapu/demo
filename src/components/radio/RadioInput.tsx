@@ -1,24 +1,25 @@
 import React from "react";
 import styles from "./radio.module.css";
-import { customStylesProps } from "./RadioGroup";
+import { CustomStylesProps } from "./RadioGroup";
+import clsx from "clsx";
 interface RadioProps {
   label: string;
   value: string;
   updateValue: (value: string) => void;
   isSelected: boolean;
-  key: number;
-  customStyles?: customStylesProps;
+
+  customStyles?: CustomStylesProps;
 }
-const Radio = ({
+const RadioInput = ({
   label,
   value,
   updateValue,
   isSelected,
-  key,
+
   customStyles,
 }: RadioProps) => {
   return (
-    <div key={key}>
+    <div className="flex flex-row">
       <input
         type="radio"
         value={value}
@@ -28,10 +29,11 @@ const Radio = ({
         checked={isSelected}
       />
       <label
-        className={`${styles.label} ${
-          isSelected ? `${styles.selectedLabel} ` : styles.notSelectedLabel
-        } `}
-        style={customStyles?.label}
+        className={clsx(
+          `${styles.label} ${
+            isSelected ? `text-blue-500 ` : styles.notSelectedLabel
+          }, ${customStyles?.label}`
+        )}
       >
         {label}
       </label>
@@ -39,4 +41,4 @@ const Radio = ({
   );
 };
 
-export default Radio;
+export default RadioInput;

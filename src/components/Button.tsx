@@ -6,7 +6,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ label, onClick }: ButtonProps) => {
   return (
     <button
-      style={{ borderRadius: "3px", cursor: "pointer" }}
+      className="border rounded-md border-blue-200 bg-blue-300 p-0.5 hover:bg-amber-50"
       onClick={onClick}
     >
       {label}

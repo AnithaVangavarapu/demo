@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import axios from "axios";
-export type option = {
+export type Option = {
   label: string;
   value: string;
 };
 export interface DataItem {
   id: string;
-  type: string;
+  type: "radio" | "checkbox";
   label: string;
-  options: option[];
+  options: Option[];
   validation: {
     required: {
       value: boolean;
@@ -17,40 +17,30 @@ export interface DataItem {
     };
   };
 }
-type radioProps = {
-  [key: string]: string;
-};
-type checkboxProps = {
-  [key: string]: string[];
-};
 
+type DatasetProps = {
+  [key: string]: string | string[];
+};
 export const useApp = () => {
   const [data, setData] = useState<DataItem[]>([]);
-  const [checkboxValues, setCheckboxValues] = useState<checkboxProps>({});
-  const [radioValue, setRadioValue] = useState<radioProps>({});
+  const [dataset, setDataset] = useState<DatasetProps>({});
   const [error, setError] = useState<string>("");
-  // const [startDate, setStartDate] = useState<Date | null>();
-  // const [endDate, setEndDate] = useState<Date | null>();
-
   const [startDate, setStartDate] = useState<Dayjs>();
   const [endDate, setEndDate] = useState<Dayjs>();
+  //fetch data from json file
   useEffect(() => {
     axios.get<DataItem[]>("/data.json").then((response) => {
       setData(response.data);
     });
   }, []);
-  const updateCheckboxValues = useCallback((id: string, value: string[]) => {
-    setCheckboxValues((prevState) => ({
-      ...prevState,
+  //update dataset before submit
+  const updateDataset = useCallback((id: string, value: string | string[]) => {
+    setDataset((prevValue) => ({
+      ...prevValue,
       [id]: value,
     }));
   }, []);
-  const updateRadioValue = useCallback((id: string, value: string) => {
-    setRadioValue((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
-  }, []);
+  //update date state
   const updateDate = useCallback((date: Dayjs, type: string) => {
     if (type === "start") {
       console.log("startDate:", dayjs(date).format("DD/MMM/YYYY"));
@@ -61,31 +51,18 @@ export const useApp = () => {
       setEndDate(date);
     }
   }, []);
-
+  //submit dataset
   const handleSubmit = () => {
-    const submitData: { [key: string]: string } = {};
-
-    data.forEach((item) => {
-      if (item.type === "radio") {
-        submitData[item.id] = radioValue[item.id] || item.options[0].value;
-      } else {
-        submitData[item.id] =
-          checkboxValues[item.id] && checkboxValues[item.id].length > 0
-            ? checkboxValues[item.id].toString()
-            : [item.options[0].value].toString();
-      }
-    });
     if (error) {
       return;
     } else {
-      console.log(submitData);
+      console.log(dataset);
     }
   };
 
   return {
     data,
-    updateRadioValue,
-    updateCheckboxValues,
+    updateDataset,
     handleSubmit,
     error,
     startDate,
