@@ -1,13 +1,20 @@
 import React from "react";
-import { CheckSquare, Square } from "lucide-react";
-import styles from "./checkbox.module.css";
-import { CustomStylesProps } from "./CheckboxGroup";
+import { SquareCheck, Square } from "lucide-react";
+import clsx from "clsx";
+
+export type ClassNamesProps = {
+  sqareCheck: string;
+  square: string;
+  checkedLabel: string;
+  uncheckedLabel: string;
+  container: string;
+};
 interface CheckboxProps {
   label: string;
   value: string;
   updateValue: (value: string) => void;
   isChecked: boolean;
-  customStyles?: CustomStylesProps;
+  classnames?: ClassNamesProps;
 }
 
 const CheckboxInput = ({
@@ -15,25 +22,21 @@ const CheckboxInput = ({
   value,
   updateValue,
   isChecked,
-  customStyles,
+  classnames,
 }: CheckboxProps) => {
   return (
-    <div className="flex flex-row items-center ">
+    <div className={clsx("flex flex-row items-center", classnames?.container)}>
       {isChecked ? (
-        <CheckSquare
-          size={18}
-          className={styles.icon}
-          style={customStyles?.checkIcon}
-        />
+        <SquareCheck className={clsx(` w-4 h-4`, classnames?.sqareCheck)} />
       ) : (
-        <Square size={18} />
+        <Square className={clsx(`w-4 h-4`, classnames?.square)} />
       )}
 
       <label
-        className={`${styles.label} ${
-          isChecked ? styles.checklabel : styles.unchecklabel
-        }`}
-        style={customStyles?.label}
+        className={clsx(
+          `text-base mx-2 ${isChecked ? "text-lg" : "text-sm"}`,
+          isChecked ? classnames?.checkedLabel : classnames?.uncheckedLabel
+        )}
         onClick={() => {
           updateValue(value);
         }}

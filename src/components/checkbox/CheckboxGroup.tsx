@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useCallback, CSSProperties } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { CustomAppStylesProps } from "../../App";
 import { CheckboxInput } from ".";
+import clsx from "clsx";
+import { ClassNamesProps } from "./CheckboxInput";
 export type Option = {
   label: string;
   value: string;
 };
-export type CustomStylesProps = {
-  checkIcon: CSSProperties;
-  label: CSSProperties;
-};
-interface CheckboxProps {
+
+interface CheckboxGroupProps {
   label?: string;
   options: Option[];
   updateCheckboxValue: (value: string[]) => void;
@@ -18,15 +17,12 @@ interface CheckboxProps {
   customCheckboxGroup?: CustomAppStylesProps;
 }
 
-const customStyles: CustomStylesProps = {
-  checkIcon: {
-    fill: "red",
-    color: "black",
-  },
-  label: {
-    color: "red",
-    padding: "10px",
-  },
+const checkboxInputClassNames: ClassNamesProps = {
+  sqareCheck: "rounded-sm fill-blue-300 ",
+  square: "",
+  checkedLabel: "text-blue-400",
+  uncheckedLabel: "text-blue-300",
+  container: "",
 };
 
 const CheckboxGroup = ({
@@ -36,7 +32,7 @@ const CheckboxGroup = ({
   initialCheckboxValue,
   error,
   customCheckboxGroup,
-}: CheckboxProps) => {
+}: CheckboxGroupProps) => {
   const [checkboxValue, setCheckboxValue] =
     useState<string[]>(initialCheckboxValue);
 
@@ -67,7 +63,7 @@ const CheckboxGroup = ({
           value={option.value}
           updateValue={updateValue}
           isChecked={checkboxValue.includes(option.value)}
-          customStyles={customStyles}
+          classnames={checkboxInputClassNames}
           key={index}
         />
       );
@@ -75,12 +71,18 @@ const CheckboxGroup = ({
     [checkboxValue, updateValue]
   );
   return (
-    <div style={customCheckboxGroup?.container}>
-      {label && <p style={customCheckboxGroup?.label}>{label}</p>}
+    <div className={clsx(`text-lg`, customCheckboxGroup?.container)}>
+      {label && (
+        <p className={clsx(`text-base`, customCheckboxGroup?.label)}>{label}</p>
+      )}
       {options.map((option: Option, index: number) =>
         renderItem(option, index)
       )}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && (
+        <p className={clsx(`text-sm text-red-500`, customCheckboxGroup?.error)}>
+          {error}
+        </p>
+      )}
     </div>
   );
 };

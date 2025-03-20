@@ -1,14 +1,13 @@
 import React, { useState, useCallback } from "react";
 import { CustomAppStylesProps } from "../../App";
 import { RadioInput } from ".";
-
+import clsx from "clsx";
+import { ClassNamesProps } from "./RadioInput";
 export type Option = {
   label: string;
   value: string;
 };
-export type CustomStylesProps = {
-  label: string;
-};
+
 interface RadioProps {
   label?: string;
   options: Option[];
@@ -18,8 +17,10 @@ interface RadioProps {
   customRadio?: CustomAppStylesProps;
 }
 
-const customStyles: CustomStylesProps = {
-  label: "text-blue-200",
+const radioInputClassNames: ClassNamesProps = {
+  selectedLabel: "text-blue-400",
+  container: "",
+  notSelectedLabel: "text-blue-300 text-sm",
 };
 const RadioGroup = ({
   label,
@@ -44,7 +45,7 @@ const RadioGroup = ({
           value={option.value}
           updateValue={updateValue}
           isSelected={radioValue === option.value}
-          customStyles={customStyles}
+          classnames={radioInputClassNames}
           key={index}
         />
       );
@@ -52,12 +53,16 @@ const RadioGroup = ({
     [radioValue]
   );
   return (
-    <div>
-      {label && <p style={customRadio?.label}>{label}</p>}
+    <div className={clsx(`bg-none`, customRadio?.container)}>
+      {label && (
+        <p className={clsx(`text-base`, customRadio?.label)}>{label}</p>
+      )}
       {options.map((option: Option, index: number) =>
         renderItem(option, index)
       )}
-      {error && <p>{error}</p>}
+      {error && (
+        <p className={clsx(`text-red-400`, customRadio?.error)}>{error}</p>
+      )}
     </div>
   );
 };

@@ -2,7 +2,12 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs, { Dayjs } from "dayjs";
-
+import clsx from "clsx";
+export type ClassNamesProps = {
+  label: string;
+  datePicker: string;
+  container: string;
+};
 interface DateProps {
   label?: string;
   format?: string;
@@ -11,8 +16,10 @@ interface DateProps {
   date: Date | null;
   minDate?: Dayjs;
   maxDate?: Dayjs;
+  classnames?: ClassNamesProps;
 }
 const DatePickerComp = (props: DateProps) => {
+  const { classnames } = props;
   const handleChange = (date: Date | null) => {
     const formattedDate = dayjs(date).format(
       props.format ? props.format.toUpperCase() : "DD/MM/YYYY"
@@ -21,10 +28,15 @@ const DatePickerComp = (props: DateProps) => {
     props.updateDate(dayjs(date), props.type);
   };
   return (
-    <div className="flex flex-row gap-4">
-      <label>{props.label}</label>
+    <div className={clsx("flex flex-row gap-4", classnames?.container)}>
+      <label className={clsx(`text-sm`, classnames?.label)}>
+        {props.label}
+      </label>
       <DatePicker
-        className="border rounded-md my-1 "
+        className={clsx(
+          "border rounded-md my-1 border-blue-300 ",
+          classnames?.datePicker
+        )}
         selected={props.date}
         onChange={handleChange}
         minDate={props.minDate?.toDate()}

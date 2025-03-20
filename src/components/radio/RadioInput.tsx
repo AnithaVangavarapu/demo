@@ -1,25 +1,26 @@
 import React from "react";
-import styles from "./radio.module.css";
-import { CustomStylesProps } from "./RadioGroup";
 import clsx from "clsx";
+export type ClassNamesProps = {
+  container: string;
+  selectedLabel: string;
+  notSelectedLabel: string;
+};
 interface RadioProps {
   label: string;
   value: string;
   updateValue: (value: string) => void;
   isSelected: boolean;
-
-  customStyles?: CustomStylesProps;
+  classnames?: ClassNamesProps;
 }
 const RadioInput = ({
   label,
   value,
   updateValue,
   isSelected,
-
-  customStyles,
+  classnames,
 }: RadioProps) => {
   return (
-    <div className="flex flex-row">
+    <div className={clsx("flex flex-row", classnames?.container)}>
       <input
         type="radio"
         value={value}
@@ -30,9 +31,8 @@ const RadioInput = ({
       />
       <label
         className={clsx(
-          `${styles.label} ${
-            isSelected ? `text-blue-500 ` : styles.notSelectedLabel
-          }, ${customStyles?.label}`
+          `text-base mx-2 `,
+          isSelected ? classnames?.selectedLabel : classnames?.notSelectedLabel
         )}
       >
         {label}

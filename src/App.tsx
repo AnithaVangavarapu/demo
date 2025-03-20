@@ -3,20 +3,21 @@ import { DataItem, useApp } from "./customHooks/useApp";
 import { Button, DatePickerComp } from "./components";
 import { CheckboxGroup } from "./components/Checkbox";
 import { RadioGroup } from "./components/Radio";
-import styles from "./app.module.css";
-import { CSSProperties } from "react";
 
 export type CustomAppStylesProps = {
-  container: CSSProperties;
-  label: CSSProperties;
+  container: string;
+  label: string;
+  error: string;
 };
 const customCheckboxGroup: CustomAppStylesProps = {
-  container: { textAlign: "left" },
-  label: { color: "blue", fontSize: "16px" },
+  container: "bg-gray-100 mb-2",
+  label: "text-blue-500",
+  error: "text-lg text-blue-500",
 };
 const customRadio: CustomAppStylesProps = {
-  container: { textAlign: "left" },
-  label: { color: "green", fontSize: "18PX" },
+  container: "mb-2",
+  label: "",
+  error: "text-lg",
 };
 const App: React.FC = () => {
   const {
@@ -78,7 +79,11 @@ const App: React.FC = () => {
         date={endDate ? endDate.toDate() : null}
         minDate={startDate !== null ? startDate : undefined}
       />
-      <Button label="submit" onClick={handleSubmit} />
+      <Button
+        label="Submit"
+        onClick={handleSubmit}
+        // classname="border-red-500"
+      />
     </div>
   );
 };
