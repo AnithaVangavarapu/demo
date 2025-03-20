@@ -27,9 +27,11 @@ const CheckboxInput = ({
   return (
     <div className={clsx("flex flex-row items-center", classnames?.container)}>
       {isChecked ? (
-        <SquareCheck className={clsx(` w-4 h-4`, classnames?.sqareCheck)} />
+        <SquareCheck
+          className={clsx(` w-4 h-4 text-blue-500`, classnames?.sqareCheck)}
+        />
       ) : (
-        <Square className={clsx(`w-4 h-4`, classnames?.square)} />
+        <Square className={clsx(`w-4 h-4 text-blue-400`, classnames?.square)} />
       )}
 
       <label

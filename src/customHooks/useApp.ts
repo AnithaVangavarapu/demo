@@ -27,12 +27,30 @@ export const useApp = () => {
   const [error, setError] = useState<string>("");
   const [startDate, setStartDate] = useState<Dayjs>();
   const [endDate, setEndDate] = useState<Dayjs>();
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
   //fetch data from json file
   useEffect(() => {
-    axios.get<DataItem[]>("/data.json").then((response) => {
-      setData(response.data);
-    });
+    let responseData: DataItem[] = [];
+    const fetchData = async () => {
+      await axios.get<DataItem[]>("/data.json").then((response) => {
+        responseData = response.data;
+        setData(response.data);
+      });
+      console.log(responseData);
+      if (responseData.length > 0) {
+        const defaultDataset: DatasetProps = {};
+        responseData.forEach((item) => {
+          defaultDataset[item.id] = item.options[0].value || "";
+        });
+        setDataset(defaultDataset);
+      } else {
+        console.log("no data");
+      }
+    };
+
+    fetchData();
   }, []);
+
   //update dataset before submit
   const updateDataset = useCallback((id: string, value: string | string[]) => {
     setDataset((prevValue) => ({
@@ -68,5 +86,7 @@ export const useApp = () => {
     startDate,
     updateDate,
     endDate,
+    currentDate,
+    setCurrentDate,
   };
 };

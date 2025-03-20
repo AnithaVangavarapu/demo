@@ -3,7 +3,7 @@ import { DataItem, useApp } from "./customHooks/useApp";
 import { Button, DatePickerComp } from "./components";
 import { CheckboxGroup } from "./components/Checkbox";
 import { RadioGroup } from "./components/Radio";
-
+import CustomCalendar from "./components/Calendar/CustomCalendar";
 export type CustomAppStylesProps = {
   container: string;
   label: string;
@@ -28,6 +28,8 @@ const App: React.FC = () => {
     startDate,
     updateDate,
     endDate,
+    currentDate,
+    setCurrentDate,
   } = useApp();
   const renderItem = useCallback((item: DataItem, index: number) => {
     if (item.type === "radio") {
@@ -84,6 +86,7 @@ const App: React.FC = () => {
         onClick={handleSubmit}
         // classname="border-red-500"
       />
+      <CustomCalendar value={currentDate} onChange={setCurrentDate} />
     </div>
   );
 };
