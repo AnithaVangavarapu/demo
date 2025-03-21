@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import React from "react";
-
+import Month from "./Month";
 interface CustomCalendarProps {
   value?: Date;
   onChange: (value: Date) => void;
@@ -9,11 +9,15 @@ const CustomCalendar = ({
   value = new Date(),
   onChange,
 }: CustomCalendarProps) => {
-  const selectedDate: Dayjs = dayjs(value);
-  const startDayOfMonth = selectedDate.startOf("month").day();
+  const currentDate: Dayjs = dayjs(value);
+  // const startDayOfMonth = selectedDate.startOf("month").day();
+  // console.log(startDayOfMonth);
+  // const totalDaysInMonth = selectedDate.startOf("month").daysInMonth();
+  // console.log(totalDaysInMonth);
+  const totalDaysInMonth = currentDate.daysInMonth();
+  console.log("total days in current month", totalDaysInMonth);
+  const startDayOfMonth = currentDate.startOf("month").day();
   console.log(startDayOfMonth);
-  const totalDaysInMonth = selectedDate.startOf("month").daysInMonth();
-  console.log(totalDaysInMonth);
   const daysOfWeek: string[] = [
     "Sun",
     "Mon",
@@ -33,6 +37,12 @@ const CustomCalendar = ({
       <div className="mx-2  bg-gray-50 grid grid-cols-7 text-center">
         {daysOfWeek.map((day, index) => (
           <div key={index}>{day}</div>
+        ))}
+        {Array.from({ length: startDayOfMonth }).map(() => (
+          <div></div>
+        ))}
+        {Array.from({ length: totalDaysInMonth }).map((day, index) => (
+          <div>{index + 1}</div>
         ))}
       </div>
     </div>
