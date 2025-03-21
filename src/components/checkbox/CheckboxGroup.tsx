@@ -3,6 +3,7 @@ import { CustomAppStylesProps } from "../../App";
 import { CheckboxInput } from ".";
 import clsx from "clsx";
 import { ClassNamesProps } from "./CheckboxInput";
+import { twMerge } from "tailwind-merge";
 export type Option = {
   label: string;
   value: string;
@@ -71,15 +72,21 @@ const CheckboxGroup = ({
     [checkboxValue, updateValue]
   );
   return (
-    <div className={clsx(`text-lg`, customCheckboxGroup?.container)}>
+    <div className={twMerge(clsx(`text-lg`, customCheckboxGroup?.container))}>
       {label && (
-        <p className={clsx(`text-base`, customCheckboxGroup?.label)}>{label}</p>
+        <p className={twMerge(clsx(`text-base`, customCheckboxGroup?.label))}>
+          {label}
+        </p>
       )}
       {options.map((option: Option, index: number) =>
         renderItem(option, index)
       )}
       {error && (
-        <p className={clsx(`text-sm text-red-500`, customCheckboxGroup?.error)}>
+        <p
+          className={twMerge(
+            clsx(`text-sm text-red-500`, customCheckboxGroup?.error)
+          )}
+        >
           {error}
         </p>
       )}

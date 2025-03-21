@@ -1,7 +1,7 @@
 import React from "react";
 import { SquareCheck, Square } from "lucide-react";
 import clsx from "clsx";
-
+import { twMerge } from "tailwind-merge";
 export type ClassNamesProps = {
   sqareCheck: string;
   square: string;
@@ -25,17 +25,25 @@ const CheckboxInput = ({
   classnames,
 }: CheckboxProps) => {
   return (
-    <div className={clsx("flex flex-row items-center", classnames?.container)}>
+    <div
+      className={twMerge(
+        clsx("flex flex-row items-center", classnames?.container)
+      )}
+    >
       {isChecked ? (
-        <SquareCheck className={clsx(` w-4 h-4`, classnames?.sqareCheck)} />
+        <SquareCheck
+          className={twMerge(clsx(` w-4 h-4`, classnames?.sqareCheck))}
+        />
       ) : (
-        <Square className={clsx(`w-4 h-4`, classnames?.square)} />
+        <Square className={twMerge(clsx(`w-4 h-4`, classnames?.square))} />
       )}
 
       <label
-        className={clsx(
-          `text-base mx-2 ${isChecked ? "text-lg" : "text-sm"}`,
-          isChecked ? classnames?.checkedLabel : classnames?.uncheckedLabel
+        className={twMerge(
+          clsx(
+            `text-base mx-2 ${isChecked ? "text-lg" : "text-sm"}`,
+            isChecked ? classnames?.checkedLabel : classnames?.uncheckedLabel
+          )
         )}
         onClick={() => {
           updateValue(value);

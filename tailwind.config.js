@@ -4,10 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        roboto: ["Roboto"],
-        winky_Sans: ["Winky+Sans"],
-        boldonse: ["Boldonse"],
-        bytesized: ["Bytesized"],
+        poppins: ["Poppins"],
       },
     },
   },

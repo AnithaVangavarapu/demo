@@ -11,12 +11,12 @@ export type CustomAppStylesProps = {
 };
 const customCheckboxGroup: CustomAppStylesProps = {
   container: "bg-gray-100 mb-2",
-  label: "text-blue-500 font-roboto",
+  label: "text-blue-500 ",
   error: "text-lg text-blue-500",
 };
 const customRadio: CustomAppStylesProps = {
   container: "mb-2",
-  label: "font-bytesized",
+  label: "",
   error: "text-lg",
 };
 const App: React.FC = () => {
@@ -62,21 +62,21 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-10 font-poppins">
       {data.map((item: DataItem, index: number) => renderItem(item, index))}
       <DatePickerComp
         label="Start Date"
         type="start"
         updateDate={updateDate}
-        date={startDate ? startDate.toDate() : null}
-        format="dd/MMM/YYYY"
+        date={startDate ? startDate : null}
+        format="dd/MMM/YYYY HH:mm a"
         maxDate={endDate !== null ? endDate : undefined}
       />
       <DatePickerComp
         label="End Date"
         type="end"
         updateDate={updateDate}
-        date={endDate ? endDate.toDate() : null}
+        date={endDate ? endDate : null}
         minDate={startDate !== null ? startDate : undefined}
       />
       <Button

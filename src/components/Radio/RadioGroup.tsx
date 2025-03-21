@@ -3,6 +3,7 @@ import { CustomAppStylesProps } from "../../App";
 import { RadioInput } from ".";
 import clsx from "clsx";
 import { ClassNamesProps } from "./RadioInput";
+import { twMerge } from "tailwind-merge";
 export type Option = {
   label: string;
   value: string;
@@ -53,9 +54,9 @@ const RadioGroup = ({
     [radioValue]
   );
   return (
-    <div className={clsx(`bg-none`, customRadio?.container)}>
+    <div className={twMerge(clsx(`bg-none`, customRadio?.container))}>
       {label && (
-        <p className={clsx(`text-base font-serif`, customRadio?.label)}>
+        <p className={twMerge(clsx(`text-base `, customRadio?.label))}>
           {label}
         </p>
       )}
@@ -63,7 +64,9 @@ const RadioGroup = ({
         renderItem(option, index)
       )}
       {error && (
-        <p className={clsx(`text-red-400`, customRadio?.error)}>{error}</p>
+        <p className={twMerge(clsx(`text-red-400`, customRadio?.error))}>
+          {error}
+        </p>
       )}
     </div>
   );

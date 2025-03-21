@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 export type ClassNamesProps = {
   container: string;
   selectedLabel: string;
@@ -20,7 +21,7 @@ const RadioInput = ({
   classnames,
 }: RadioProps) => {
   return (
-    <div className={clsx("flex flex-row", classnames?.container)}>
+    <div className={twMerge(clsx("flex flex-row", classnames?.container))}>
       <input
         type="radio"
         value={value}
@@ -30,9 +31,13 @@ const RadioInput = ({
         checked={isSelected}
       />
       <label
-        className={clsx(
-          `text-base mx-2 `,
-          isSelected ? classnames?.selectedLabel : classnames?.notSelectedLabel
+        className={twMerge(
+          clsx(
+            `text-base mx-2 `,
+            isSelected
+              ? classnames?.selectedLabel
+              : classnames?.notSelectedLabel
+          )
         )}
       >
         {label}
