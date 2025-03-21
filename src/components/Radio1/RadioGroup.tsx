@@ -55,7 +55,9 @@ const RadioGroup = ({
   return (
     <div className={clsx(`bg-none`, customRadio?.container)}>
       {label && (
-        <p className={clsx(`text-base`, customRadio?.label)}>{label}</p>
+        <p className={clsx(`text-base font-serif`, customRadio?.label)}>
+          {label}
+        </p>
       )}
       {options.map((option: Option, index: number) =>
         renderItem(option, index)

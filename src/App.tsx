@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { DataItem, useApp } from "./customHooks/useApp";
 import { Button, DatePickerComp } from "./components";
 import { CheckboxGroup } from "./components/Checkbox";
-import { RadioGroup } from "./components/Radio";
+import { RadioGroup } from "./components/Radio1";
 
 export type CustomAppStylesProps = {
   container: string;
@@ -11,12 +11,12 @@ export type CustomAppStylesProps = {
 };
 const customCheckboxGroup: CustomAppStylesProps = {
   container: "bg-gray-100 mb-2",
-  label: "text-blue-500",
+  label: "text-blue-500 font-roboto",
   error: "text-lg text-blue-500",
 };
 const customRadio: CustomAppStylesProps = {
   container: "mb-2",
-  label: "",
+  label: "font-bytesized",
   error: "text-lg",
 };
 const App: React.FC = () => {
