@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { DataItem, useApp } from "./customHooks/useApp";
 import { Button, DatePickerComp } from "./components";
-import { CheckboxGroup } from "./components/Checkbox";
-import { RadioGroup } from "./components/Radio";
+import { CheckboxGroup } from "./components/Checkbox1";
+import { RadioGroup } from "./components/Radio1";
 import CustomCalendar from "./components/Calendar/CustomCalendar";
 export type CustomAppStylesProps = {
   container: string;
