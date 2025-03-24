@@ -36,7 +36,7 @@ export const useApp = () => {
         responseData = response.data;
         setData(response.data);
       });
-      console.log(responseData);
+      
       if (responseData.length > 0) {
         const defaultDataset: DatasetProps = {};
         responseData.forEach((item) => {

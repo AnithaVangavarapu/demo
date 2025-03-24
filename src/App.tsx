@@ -86,6 +86,7 @@ const App: React.FC = () => {
         onClick={handleSubmit}
         // classname="border-red-500"
       />
+      <div>SelctedDate: {currentDate.toDateString()}</div>
       <CustomCalendar value={currentDate} onChange={setCurrentDate} />
     </div>
   );
