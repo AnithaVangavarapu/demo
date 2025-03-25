@@ -23,7 +23,7 @@ const CustomCalendar = ({ value = new Date(), onChange }: CustomCalendarProps) =
 
   const daysOfWeek: string[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  // ✅ Fixed: Use .date(day) instead of .day(day+1)
+ 
   const handleSelectDay = (day: number) => {
     const newDate = selectedDate.date(day);
     setSelectedDate(newDate);
@@ -64,13 +64,13 @@ const handleShowYear=()=>{
   }
 }
   return (
-    <div className="mx-auto mt-2 w-[400px] p-2 bg-gray-200 flex flex-col">
+    <div className="mx-auto mt-2 w-[400px] p-2 bg-gray-100 flex flex-col">
       <div className="flex flex-row justify-between">
         {/* <button className="m-2">Clear</button> */}
-        <button className="m-2" onClick={handleShowMonth}>
+        <button className="m-2 bg-blue-500 rounded text-white p-0.5 hover:bg-white hover:text-black" onClick={handleShowMonth}>
           {selectedMonth}
         </button>
-        <button className="m-2" onClick={handleShowYear}>
+        <button className="m-2 bg-blue-500 rounded text-white p-0.5 hover:bg-white hover:text-black" onClick={handleShowYear}>
           {selectedYear}
         </button>
       </div>

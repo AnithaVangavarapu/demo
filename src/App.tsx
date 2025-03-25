@@ -4,6 +4,7 @@ import { Button, DatePickerComp } from "./components";
 import { CheckboxGroup } from "./components/Checkbox";
 import { RadioGroup } from "./components/Radio";
 import CustomCalendar from "./components/Calendar/CustomCalendar";
+import dayjs from "dayjs";
 export type CustomAppStylesProps = {
   container: string;
   label: string;
@@ -87,6 +88,7 @@ const App: React.FC = () => {
         // classname="border-red-500"
       />
       <div>SelctedDate: {currentDate.toDateString()}</div>
+      <div>Formatted Selected Date: {dayjs(currentDate).format('DD/MMM/YYYY HH:mm A')}</div>
       <CustomCalendar value={currentDate} onChange={setCurrentDate} />
     </div>
   );

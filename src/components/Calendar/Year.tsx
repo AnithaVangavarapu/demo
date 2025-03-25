@@ -14,14 +14,14 @@ const Year = ({ currentYear, onSelect }: YearProps) => {
     (_, index) => yearRangeStartWith + index
   );
   const handlePreviousYears = () => {
-    setYearRangeStartWith((prev) => prev - 5);
+    setYearRangeStartWith((prev) => prev - 15);
   };
   const handleNextYears = () => {
-    setYearRangeStartWith((prev) => prev + 5);
+    setYearRangeStartWith((prev) => prev + 15);
   };
   return (
     <div
-      className="m-4 w-[300px] bg-gray-200 p-4 flex items-center justify-between"
+      className="m-10 w-[300px] bg-white p-4 flex items-center justify-between"
     >
       <div className="flex justify-between items-center w-full mb-2">
       
@@ -29,7 +29,7 @@ const Year = ({ currentYear, onSelect }: YearProps) => {
         
         <div className="grid grid-cols-5 gap-2 text-center w-full">
           {years.map((year) => (
-            <button className={`p-0.5 rounded ${year===currentYear?'bg-blue-500 tex-white':''}`} onClick={() => onSelect(year)}>
+            <button className={`p-0.5 rounded ${year===currentYear?'bg-blue-500 text-white':'hover:bg-gray-100 rounded'}`} onClick={() => onSelect(year)}>
               {year}
             </button>
           ))}
