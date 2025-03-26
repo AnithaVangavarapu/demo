@@ -4,6 +4,8 @@ import { Button, DatePickerComp } from "./components";
 import { CheckboxGroup } from "./components/Checkbox";
 import { RadioGroup } from "./components/Radio";
 import CustomCalendar from "./components/Calendar/CustomCalendar";
+import dayjs from "dayjs";
+import DateRangePicker from "./components/DateRangePicker";
 export type CustomAppStylesProps = {
   container: string;
   label: string;
@@ -30,6 +32,7 @@ const App: React.FC = () => {
     endDate,
     currentDate,
     setCurrentDate,
+    
   } = useApp();
   const renderItem = useCallback((item: DataItem, index: number) => {
     if (item.type === "radio") {
@@ -84,10 +87,10 @@ const App: React.FC = () => {
       <Button
         label="Submit"
         onClick={handleSubmit}
-        // classname="border-red-500"
+       
       />
-      <div>SelctedDate: {currentDate.toDateString()}</div>
-      <CustomCalendar value={currentDate} onChange={setCurrentDate} />
+      
+   <DateRangePicker/>
     </div>
   );
 };

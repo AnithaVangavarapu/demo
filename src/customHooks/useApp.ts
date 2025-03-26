@@ -28,6 +28,7 @@ export const useApp = () => {
   const [startDate, setStartDate] = useState<Dayjs>();
   const [endDate, setEndDate] = useState<Dayjs>();
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
+ 
   //fetch data from json file
   useEffect(() => {
     let responseData: DataItem[] = [];
@@ -88,5 +89,6 @@ export const useApp = () => {
     endDate,
     currentDate,
     setCurrentDate,
+ 
   };
 };

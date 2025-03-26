@@ -3,9 +3,12 @@ import dayjs,{Dayjs} from "dayjs";
 
 interface MonthProps{
  currentMonth:number,
+ currentYear?:number
   onSelect:(monthIndex:number)=>void
+  minMonth?:number
+  minYear?:number
 }
-const Month = ({currentMonth,onSelect}:MonthProps) => {
+const Month = ({currentMonth,onSelect,minMonth,currentYear,minYear}:MonthProps) => {
  
 console.log("month",currentMonth)
   const months: string[] = [
@@ -26,12 +29,15 @@ console.log("month",currentMonth)
   return (
     <div className=" m-10
      inset-0 w-[300px] h-[100px]
-                    bg-gray-400 opacity-50 
+                    bg-white
                     z-10">
                       <div className="grid grid-cols-4 p-4">
-                      {months.map((month, index) => (
-        <button className={index===currentMonth?'bg-blue-500':'hover:bg-gray-300'} onClick={()=>onSelect(index)}>{month}</button>
-      ))}
+                      {months.map((month, index) => {
+                        const isSameYear=currentYear=== minYear
+                        const isDisabled=minMonth!==undefined && isSameYear && index<minMonth ;
+                        return (
+        <button className={`${index===currentMonth?'bg-blue-500 rounded text-white':''} ${isDisabled?'pointer-events-none text-gray-200':''}` } onClick={()=>onSelect(index)}>{month}</button>
+      )})}
                       </div>
      
     </div>
