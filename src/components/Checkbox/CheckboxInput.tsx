@@ -1,5 +1,5 @@
 import React from "react";
-import { SquareCheck, Square } from "lucide-react";
+import { SquareCheckBig, Square } from "lucide-react";
 import clsx from "clsx";
 
 export type ClassNamesProps = {
@@ -25,23 +25,23 @@ const CheckboxInput = ({
   classnames,
 }: CheckboxProps) => {
   return (
-    <div className={clsx("flex flex-row items-center", classnames?.container)}>
+    <div
+      className={clsx("flex flex-row items-center", classnames?.container)}
+      onClick={() => {
+        updateValue(value);
+      }}
+    >
       {isChecked ? (
-        <SquareCheck
-          className={clsx(` w-4 h-4 text-blue-500`, classnames?.sqareCheck)}
-        />
+        <SquareCheckBig className={clsx(`w-6 h-7 `, classnames?.sqareCheck)} />
       ) : (
-        <Square className={clsx(`w-4 h-4 text-blue-400`, classnames?.square)} />
+        <Square className={clsx(`w-6 h-6 stroke-[1]`, classnames?.square)} />
       )}
 
       <label
         className={clsx(
-          `text-base mx-2 ${isChecked ? "text-lg" : "text-sm"}`,
+          `text-base  pl-6 ${isChecked ? "text-md" : "text-sm"}`,
           isChecked ? classnames?.checkedLabel : classnames?.uncheckedLabel
         )}
-        onClick={() => {
-          updateValue(value);
-        }}
       >
         {label}
       </label>

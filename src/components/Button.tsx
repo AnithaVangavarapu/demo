@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={clsx(
-        "mt-2 border rounded-md border-blue-200 bg-blue-950 p-0.5 text-fuchsia-50 hover:bg-amber-50 hover:text-blue-950 ",
+        " mt-2 border rounded-md border-blue-200 bg-blue-950 py-0.5 px-3 text-fuchsia-50 hover:bg-amber-50 hover:text-blue-950 ",
         classname
       )}
       onClick={onClick}

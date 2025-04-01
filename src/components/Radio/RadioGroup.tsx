@@ -18,9 +18,9 @@ interface RadioProps {
 }
 
 const radioInputClassNames: ClassNamesProps = {
-  selectedLabel: "text-blue-400",
+  selectedLabel: "text-blue-800 text-md",
   container: "",
-  notSelectedLabel: "text-blue-300 text-sm",
+  notSelectedLabel: "text-sm",
 };
 const RadioGroup = ({
   label,

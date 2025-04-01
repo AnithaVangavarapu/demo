@@ -1,5 +1,7 @@
 import React from "react";
 import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
+import { CircleSmall, CircleDot } from "lucide-react";
 export type ClassNamesProps = {
   container: string;
   selectedLabel: string;
@@ -20,19 +22,29 @@ const RadioInput = ({
   classnames,
 }: RadioProps) => {
   return (
-    <div className={clsx("flex flex-row", classnames?.container)}>
-      <input
-        type="radio"
-        value={value}
-        onChange={() => {
-          updateValue(value);
-        }}
-        checked={isSelected}
-      />
+    <div
+      className={clsx("flex flex-row m-2 items-center", classnames?.container)}
+      onClick={() => {
+        updateValue(value);
+      }}
+    >
+      {isSelected ? (
+        <CircleDot
+          className={clsx(
+            twMerge("w-6 h-6 stroke-[2] mx-2 fill-blue-800 text-white")
+          )}
+        />
+      ) : (
+        <CircleSmall className={clsx(twMerge("w-10 h-8 stroke-[1]"))} />
+      )}
       <label
         className={clsx(
-          `text-base mx-2 `,
-          isSelected ? classnames?.selectedLabel : classnames?.notSelectedLabel
+          twMerge(
+            `text-sm m-2 pl-2`,
+            isSelected
+              ? classnames?.selectedLabel
+              : classnames?.notSelectedLabel
+          )
         )}
       >
         {label}

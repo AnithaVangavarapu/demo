@@ -3,8 +3,6 @@ import { DataItem, useApp } from "./customHooks/useApp";
 import { Button, DatePickerComp } from "./components";
 import { CheckboxGroup } from "./components/Checkbox";
 import { RadioGroup } from "./components/Radio";
-import CustomCalendar from "./components/Calendar/CustomCalendar";
-import dayjs from "dayjs";
 import DateRangePicker from "./components/DateRangePicker";
 export type CustomAppStylesProps = {
   container: string;
@@ -12,14 +10,14 @@ export type CustomAppStylesProps = {
   error: string;
 };
 const customCheckboxGroup: CustomAppStylesProps = {
-  container: "bg-gray-100 mb-2",
-  label: "text-blue-500",
-  error: "text-lg text-blue-500",
+  container: "mb-2",
+  label: "",
+  error: "text-lg text-red-500",
 };
 const customRadio: CustomAppStylesProps = {
   container: "mb-2",
   label: "",
-  error: "text-lg",
+  error: "text-lg text-red-500",
 };
 const App: React.FC = () => {
   const {
@@ -30,9 +28,6 @@ const App: React.FC = () => {
     startDate,
     updateDate,
     endDate,
-    currentDate,
-    setCurrentDate,
-    
   } = useApp();
   const renderItem = useCallback((item: DataItem, index: number) => {
     if (item.type === "radio") {
@@ -67,7 +62,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-10 font-poppins">
       {data.map((item: DataItem, index: number) => renderItem(item, index))}
       <DatePickerComp
         label="Start Date"
@@ -84,13 +79,9 @@ const App: React.FC = () => {
         date={endDate ? endDate.toDate() : null}
         minDate={startDate !== null ? startDate : undefined}
       />
-      <Button
-        label="Submit"
-        onClick={handleSubmit}
-       
-      />
-      
-   <DateRangePicker/>
+      <Button label="Submit" onClick={handleSubmit} />
+
+      <DateRangePicker />
     </div>
   );
 };

@@ -18,11 +18,11 @@ interface CheckboxGroupProps {
 }
 
 const checkboxInputClassNames: ClassNamesProps = {
-  sqareCheck: "rounded-sm fill-blue-300 ",
-  square: "",
-  checkedLabel: "text-blue-400",
-  uncheckedLabel: "text-blue-300",
-  container: "",
+  sqareCheck: "rounded-sm fill-blue-800 text-white",
+  square: "text-black",
+  checkedLabel: "text-blue-800 ",
+  uncheckedLabel: "",
+  container: "p-2",
 };
 
 const CheckboxGroup = ({

@@ -28,13 +28,18 @@ const DatePickerComp = (props: DateProps) => {
     props.updateDate(dayjs(date), props.type);
   };
   return (
-    <div className={clsx("flex flex-row gap-4", classnames?.container)}>
-      <label className={clsx(`text-sm`, classnames?.label)}>
+    <div
+      className={clsx(
+        "flex flex-row gap-4 items-center",
+        classnames?.container
+      )}
+    >
+      <label className={clsx(`text-sm w-[70px]`, classnames?.label)}>
         {props.label}
       </label>
       <DatePicker
         className={clsx(
-          "border rounded-md my-1 border-blue-300 ",
+          "border rounded-md my-1 border-blue-300",
           classnames?.datePicker
         )}
         selected={props.date}
